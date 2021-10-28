@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Provider } from "react-redux";
+import configureStore from "./redux/store";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import ProtectedRoute from "./components/ProtectedRoute";
+const store = configureStore();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <ChakraProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <ProtectedRoute exact path="/home" component={Home} />
+            {/* <Route exact path="/home" component={Home} /> */}
+          </Switch>
+        </Router>
+      </ChakraProvider>
+    </Provider>
   );
 }
 
